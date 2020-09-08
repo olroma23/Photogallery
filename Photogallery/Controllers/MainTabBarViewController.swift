@@ -10,8 +10,8 @@ import UIKit
 
 class MainTabBarViewController: UITabBarController {
     
-    let photosVC = PhotosCollectionViewController(collectionViewLayout: UICollectionViewLayout())
-    let favouritesVC = FavouritesCollectionViewController(collectionViewLayout: UICollectionViewLayout())
+    let photosVC = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+    let favouritesVC = FavouritesCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     
@@ -14,12 +15,13 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     private let checkMark: UIImageView = {
        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
+        imageView.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))?.withTintColor(.white, renderingMode: .alwaysOriginal)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
         return imageView
     }()
-    private let photoImageView: UIImageView = {
+    
+     let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .secondarySystemBackground
@@ -27,6 +29,14 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         
         return imageView
     }()
+    
+    var unsplashPhoto: UnsplashPhoto! {
+        didSet {
+            let photoURL = unsplashPhoto.urls["regular"]
+            guard let imageURL = photoURL, let url = URL(string: imageURL)  else { return }
+            photoImageView.sd_setImage(with: url, completed: nil)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
