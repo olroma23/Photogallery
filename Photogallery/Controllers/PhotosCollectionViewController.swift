@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class PhotosCollectionViewController: UICollectionViewController {
     
     let reuseIdentifier = "PhotoCell"
@@ -45,7 +46,15 @@ class PhotosCollectionViewController: UICollectionViewController {
     // MARK: - Navigation items actions
     
     @objc private func addBarButtonItemPressed() {
-        print(#function)
+        
+        let tabBar = self.tabBarController as! MainTabBarViewController
+        let navVC = tabBar.viewControllers?[1] as? UINavigationController
+        let favouriteVC = navVC?.topViewController as! FavouritesCollectionViewController
+        
+        favouriteVC.selectedImages = self.selectedImages
+        favouriteVC.collectionView.reloadData()
+        
+        self.refresh()
     }
     
     @objc private func actionBarButtonItemPressed(sender: UIBarButtonItem) {
@@ -138,7 +147,6 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
         
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
             self.networkDataFetcher.fetchImages(searchTerm: searchText) { [weak self] (searchResults) in
-                print(searchResults)
                 guard let fetchedPhotos = searchResults else { return }
                 self?.photos = fetchedPhotos.results
                 self?.collectionView.reloadData()
